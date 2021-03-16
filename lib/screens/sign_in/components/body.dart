@@ -1,8 +1,10 @@
-import 'package:app_shop/components/custom_suffix_icon.dart';
-import 'package:app_shop/components/default_botton.dart';
-import 'package:app_shop/components/form_error.dart';
-import 'package:app_shop/size_config.dart';
+import 'package:app_shop/components/no_account_text.dart';
+import 'package:app_shop/components/social_card.dart';
+import 'package:app_shop/constants.dart';
+import 'package:app_shop/screens/forgot_password/forgot_password_screen.dart';
+import 'package:app_shop/screens/sign_in/components/sign_form.dart';
 import 'package:flutter/material.dart';
+import '../../../size_config.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -12,98 +14,53 @@ class Body extends StatelessWidget {
           width: double.infinity,
           child: Padding(
             padding:  EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-            child: Column(
-              children: [
-                Text("Welcome Back" ,
-                   style: TextStyle(
-                    color: Colors.black,
-                    fontSize: getProportionateScreenWidth(28),
-                  fontWeight: FontWeight.bold,
-                ),
-                ),
-                Text("Sign in with your email and password \nor continue with social media ",
-                textAlign: TextAlign.center,
-                ),
-                SignForm(),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: SizeConfig.screenHeight*0.04,),
+                  Text("Welcome Back" ,
+                     style: TextStyle(
+                      color: Colors.black,
+                      fontSize: getProportionateScreenWidth(28),
+                    fontWeight: FontWeight.bold,
+                  ),
+                  ),
+                  Text("Sign in with your email and password \nor continue with social media ",
+                  textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: SizeConfig.screenHeight*0.08,),
+                  SignForm(),
+                  SizedBox(height: SizeConfig.screenHeight*0.08,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SocalCard(
+                        icon: "assets/icons/google-icon.svg",
+                        press: (){
+
+                        },),
+
+                      SocalCard(
+                        icon: "assets/icons/facebook-2.svg",
+                        press: (){
+
+                        },),
+                      SocalCard(
+                        icon: "assets/icons/twitter.svg",
+                        press: (){
+                        },),
+                    ],
+                  ),
+                  SizedBox(height: getProportionateScreenHeight(20),),
+                  NoAccountText(),
+
+
+                ],
+              ),
             ),
           ),
         )
     );
   }
 }
-
-class SignForm extends StatefulWidget {
-  @override
-  _SignFormState createState() => _SignFormState();
-}
-
-class _SignFormState extends State<SignForm> {
-  final _formKey = GlobalKey<FormState>();
-  String email;
-  String password;
-  bool remember = false;
-
-  final List<String> errors = [];
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-        key: _formKey,
-        child: Column (
-        children: [
-          buildEmailFormField(),
-          SizedBox(height: getProportionateScreenWidth(20),),
-          buildPasswordFormField(),
-          SizedBox(height: getProportionateScreenWidth(20),),
-          FormError(errors: errors),
-          DefualtBotton(
-            text: "continue",
-            press: (){
-               if(_formKey.currentState.validate()){
-                 _formKey.currentState.save();
-               }
-            },
-          )
-        ],
-        )
-    );
-  }
-}
-
-TextFormField buildEmailFormField(){
-  return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      validator: (value) {
-
-      if (value.isEmpty) {
-        setState() {
-
-        }
-        return "";
-      }
-      return null;
-    },
-      decoration: InputDecoration(
-      labelText: "Email",
-      hintText: "Enter your email",
-      suffixIcon:CustomSuffixIcon(svgIcon:"assets/icons/Mail.svg"),
-      floatingLabelBehavior: FloatingLabelBehavior.always,
-    ),
-  );
-}
-
-TextFormField buildPasswordFormField(){
-  return TextFormField(
-      obscureText: true,
-      decoration: InputDecoration(
-      labelText: "Password",
-      hintText: "Enter your password",
-      suffixIcon:CustomSuffixIcon(svgIcon:"assets/icons/Lock.svg"),
-      floatingLabelBehavior: FloatingLabelBehavior.always,
-    ),
-  );
-}
-
-
-
 
