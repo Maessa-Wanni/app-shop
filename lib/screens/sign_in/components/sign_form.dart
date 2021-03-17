@@ -1,4 +1,4 @@
-import 'package:app_shop/login_scuccess/login_scuccess_screen.dart';
+import 'package:app_shop/screens/login_scuccess/login_scuccess_screen.dart';
 import 'package:app_shop/screens/forgot_password/forgot_password_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,7 +1,8 @@
 import 'package:app_shop/components/default_botton.dart';
 import 'package:flutter/material.dart';
+import 'package:app_shop/size_config.dart';
+import 'package:app_shop/screens/home/home_screen.dart';
 
-import '../../size_config.dart';
 
 
 class Body extends StatelessWidget {
@@ -29,7 +30,7 @@ class Body extends StatelessWidget {
           child: DefualtBotton(
             text: "Back to home",
             press: () {
-            //  Navigator.pushNamed(context, HomeScreen.routeName);
+              Navigator.pushNamed(context, HomeScreen.routeName);
             },
           ),
         ),

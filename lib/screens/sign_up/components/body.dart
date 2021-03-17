@@ -1,6 +1,4 @@
-import 'package:app_shop/components/custom_suffix_icon.dart';
-import 'package:app_shop/components/default_botton.dart';
-import 'package:app_shop/components/form_error.dart';
+
 import 'package:app_shop/components/social_card.dart';
 import 'package:app_shop/constants.dart';
 import 'package:app_shop/screens/sign_up/components/sign_up_form.dart';
