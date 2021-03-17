@@ -1,3 +1,6 @@
+import 'package:app_shop/login_scuccess/login_scuccess_screen.dart';
+import 'package:app_shop/screens/forgot_password/forgot_password_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app_shop/components/custom_suffix_icon.dart';
 import 'package:app_shop/components/default_botton.dart';
@@ -16,6 +19,22 @@ class _SignFormState extends State<SignForm> {
   String password;
   bool remember = false;
   final List<String> errors = [];
+
+  void addError({String error}){
+    if(!errors.contains(error)){
+      setState(() {
+        errors.add(error);
+      });
+    }
+  }
+
+  void removeError({String error}){
+    if(errors.contains(error)){
+      setState(() {
+        errors.remove(error);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +59,10 @@ class _SignFormState extends State<SignForm> {
                 ),
                 Text("Remember me"),
                 Spacer(),
-                Text("Forget Password" , style: TextStyle(decoration: TextDecoration.underline),)
+                GestureDetector(
+                  onTap: ()=>Navigator.pushNamed(context, ForgotPasswordScreen.routeName),
+                  child: Text("Forget Password" , style: TextStyle(decoration: TextDecoration.underline),),
+                )
               ],
             ),
             SizedBox(height: getProportionateScreenWidth(20),),
@@ -50,6 +72,7 @@ class _SignFormState extends State<SignForm> {
               press: (){
                 if(_formKey.currentState.validate()){
                   _formKey.currentState.save();
+                  Navigator.pushNamed(context, LoginSuccessScreen.routeName);
                 }
               },
             )
@@ -57,36 +80,81 @@ class _SignFormState extends State<SignForm> {
         )
     );
   }
+
+  TextFormField buildPasswordFormField(){
+    return TextFormField(
+      obscureText: true,
+      onSaved: (newValue) => password = newValue,
+      onChanged: (value){
+        if(value.isNotEmpty){
+           removeError(error: kPassNullError);
+        }
+        else if(value.length >=8 ){
+           removeError(error: kShortPassError);
+        }
+        return null;
+      },
+      validator: (value){
+        if(value.toString().isEmpty) {
+            addError(error: kPassNullError);
+          return "";
+        }
+        else if (value.length < 8){
+             addError(error: kShortPassError);
+           return "";
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Password",
+        hintText: "Enter your password",
+        suffixIcon:CustomSuffixIcon(svgIcon:"assets/icons/Lock.svg"),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+      ),
+    );
+  }
+
+  TextFormField buildEmailFormField(){
+    return TextFormField(
+      keyboardType: TextInputType.emailAddress,
+      onSaved: (newValue) => email = newValue,
+      onChanged: (value){
+        if(value.isNotEmpty){
+          removeError(error: kEmailNullError);
+          return "";
+        }
+        else
+        if (emailValidatorRegExp.hasMatch(value)){
+          removeError(error: kInvalidEmailError);
+          return "";
+        }
+        return null;
+      },
+      validator: (value){
+        if(value.isEmpty){
+          addError(error: kEmailNullError);
+          return "";
+        }
+        else
+        if (!emailValidatorRegExp.hasMatch(value)){
+          addError(error: kInvalidEmailError);
+          return "";
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Email",
+        hintText: "Enter your email",
+        suffixIcon:CustomSuffixIcon(svgIcon:"assets/icons/Mail.svg"),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+      ),
+    );
+  }
 }
 
-TextFormField buildEmailFormField(){
-  return TextFormField(
-    keyboardType: TextInputType.emailAddress,
-
-    decoration: InputDecoration(
-      labelText: "Email",
-      hintText: "Enter your email",
-      suffixIcon:CustomSuffixIcon(svgIcon:"assets/icons/Mail.svg"),
-      floatingLabelBehavior: FloatingLabelBehavior.always,
-    ),
-  );
-}
 
 
-TextFormField buildPasswordFormField(){
-  return TextFormField(
-    obscureText: true,
-    validator: (value){
 
-    },
-    decoration: InputDecoration(
-      labelText: "Password",
-      hintText: "Enter your password",
-      suffixIcon:CustomSuffixIcon(svgIcon:"assets/icons/Lock.svg"),
-      floatingLabelBehavior: FloatingLabelBehavior.always,
-    ),
-  );
-}
 
 
 
