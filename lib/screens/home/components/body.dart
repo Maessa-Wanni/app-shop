@@ -1,35 +1,44 @@
 import 'package:app_shop/constants.dart';
-import 'package:app_shop/screens/home/components/search_field.dart';
-import 'package:app_shop/size_config.dart';
+import 'package:app_shop/model/product.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import 'home_header.dart';
-import 'icon_btn_with_counter.dart';
+import 'categories.dart';
+import 'item_card.dart';
+
 
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: getProportionateScreenWidth(20),),
-            HomeHeader(),
-          ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+          child: Text(
+              "Products by categories",
+            style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),
+              ),
         ),
-      ),
+        Categories(),
+        Expanded(
+            child: Padding(
+              padding:  EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              child: GridView.builder(
+                itemCount: products.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.75,
+                    mainAxisSpacing: kDefaultPadding,
+                    crossAxisSpacing: kDefaultPadding
+                  ),
+                  itemBuilder: (context,index) => ItemCard(
+                    product: products[index],
+               //     press: ()=>Navigator.pushNamed(context, routeName),
+                  )),
+            ))
+
+
+      ],
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
