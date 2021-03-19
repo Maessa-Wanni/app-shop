@@ -7,7 +7,8 @@ import '../../../constants.dart';
 
 class ItemCard extends StatelessWidget {
 
-  final Product product;
+
+  final  product;
   final Function press;
 
   const ItemCard({
@@ -24,10 +25,10 @@ class ItemCard extends StatelessWidget {
             Expanded(
               child: Container(
                 padding: EdgeInsets.all(kDefaultPadding),
-//            width: 160,
-                //          height: 180,
+             //         width: 160,
+              //            height: 180,
                 decoration: BoxDecoration(
-                    color: product.color,
+           //         color: Colors.red,
                     borderRadius: BorderRadius.circular(16)
                 ),
                 child: Image.asset(product.image),
@@ -35,7 +36,8 @@ class ItemCard extends StatelessWidget {
             ),
             Padding(
               padding:  EdgeInsets.symmetric(vertical: kDefaultPadding/4),
-              child: Text(product.title,
+              child: Text(
+                product.title,
                 style: TextStyle(color: kTextColor),),
             ),
             Text(

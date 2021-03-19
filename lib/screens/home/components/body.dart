@@ -1,13 +1,17 @@
 import 'package:app_shop/constants.dart';
+import 'package:app_shop/contollers/product_contoller.dart';
 import 'package:app_shop/model/product.dart';
 import 'package:app_shop/screens/details/details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'categories.dart';
 import 'item_card.dart';
 
 
 class Body extends StatelessWidget {
+
+  final ProductController productController = Get.put(ProductController());
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,7 +29,7 @@ class Body extends StatelessWidget {
             child: Padding(
               padding:  EdgeInsets.symmetric(horizontal: kDefaultPadding),
               child: GridView.builder(
-                itemCount: products.length,
+                itemCount: productController.productList.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 0.75,
@@ -33,19 +37,17 @@ class Body extends StatelessWidget {
                     crossAxisSpacing: kDefaultPadding
                   ),
                   itemBuilder: (context,index) => ItemCard(
-                    product: products[index],
+                    product: productController.productList[index],
                     press: ()=>Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context)=>DetailScreen(
-                            product: products[index],
+                            product: productController.productList[index],
                           )
                       )
                     ),
                   )),
             ))
-
-
       ],
     );
   }

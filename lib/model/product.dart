@@ -1,35 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+// To parse this JSON data, do
+//
+//     final product = productFromJson(jsonString);
+
+import 'dart:convert';
+
+List<Product> productFromJson(String str) => List<Product>.from(json.decode(str).map((x) => Product.fromJson(x)));
+
+String productToJson(List<Product> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class Product {
-
-  final String image, title,description;
-  final int  price,size,id;
-  final Color color;
-
   Product({
-  this.image,
-  this.title,
-  this.description,
-  this.price,
-  this.size,
-  this.id,
-  this.color,
+    this.id,
+    this.title,
+    this.price,
+    this.description,
+    this.category,
+    this.image,
+  });
 
- });
+  int id;
+  String title;
+  double price;
+  String description;
+  Category category;
+  String image;
+
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
+    id: json["id"],
+    title: json["title"],
+    price: json["price"].toDouble(),
+    description: json["description"],
+    category: categoryValues.map[json["category"]],
+    image: json["image"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "title": title,
+    "price": price,
+    "description": description,
+    "category": categoryValues.reverse[category],
+    "image": image,
+  };
+}
+
+enum Category { MEN_CLOTHING, JEWELERY, ELECTRONICS, WOMEN_CLOTHING }
+
+final categoryValues = EnumValues({
+  "electronics": Category.ELECTRONICS,
+  "jewelery": Category.JEWELERY,
+  "men clothing": Category.MEN_CLOTHING,
+  "women clothing": Category.WOMEN_CLOTHING
+});
+
+class EnumValues<T> {
+  Map<String, T> map;
+  Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    if (reverseMap == null) {
+      reverseMap = map.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap;
+  }
 }
 
 
-List<Product> products = [
 
-  Product(
-    id:1,
-    title: "Apple",
-    price: 24,
-    size: 10,
-    description: "Heliiiiiiiiiiiiiiiiiiii",
-    image: "assets/images/apple-pay.png",
-    color: Color(0xFF3D82AE)
-  ),
-];
+
 
