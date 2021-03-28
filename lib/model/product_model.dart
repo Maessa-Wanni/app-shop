@@ -1,10 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-// To parse this JSON data, do
-//
-//     final product = productFromJson(jsonString);
-
 import 'dart:convert';
 
 List<Product> productFromJson(String str) => List<Product>.from(json.decode(str).map((x) => Product.fromJson(x)));
@@ -27,6 +20,7 @@ class Product {
   String description;
   Category category;
   String image;
+
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
     id: json["id"],
@@ -69,8 +63,3 @@ class EnumValues<T> {
     return reverseMap;
   }
 }
-
-
-
-
-

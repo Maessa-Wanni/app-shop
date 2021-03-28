@@ -1,16 +1,21 @@
 import 'package:app_shop/constants.dart';
-import 'package:app_shop/screens/home/components/body.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'components/categories.dart';
+import 'components/home.dart';
 
 
 class HomeScreen extends StatelessWidget {
   static String routeName = "/home";
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
-      body: Body(),
+      body: ProductsScreen(),
     );
   }
 }
